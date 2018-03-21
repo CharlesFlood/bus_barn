@@ -1,0 +1,38 @@
+{% extends "busbarn/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h1>{{ vehicle.vehicle_name }}</h1>
+
+<p>Vin: {{ vehicle.vin_number }}</p>
+<p>Class: {{ vehicle.vehicle_class }}</p>
+<p>License: {{ vehicle.license_plate }}</p>
+<p>Notes: {{ vehicle.notes }}</p>
+
+{% if issues %}
+<h2>Issues:</h2>
+<table class="table">
+  <tr><th>Description</th>
+  <th>Start Date</th>
+  <th>Severity</th>
+  <th>Mechanic</th>
+  <th>Reason</th></tr>
+
+  {% for issue in issues %}
+  <tr>
+    <td>{{ issue.description }}</td>
+    <td>{{ issue.date_noted }}</td>
+    <td>{{ issue.severity }}</td>
+    <td>{{ issue.mechanic }}</td>
+    <td>{{ issue.reason }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No current issues</p>
+{% endif %}
+
+
+<a href="{% url 'vehicles:issue_add' vehicle.id %}">Add Issue</a>
+{% endblock %}

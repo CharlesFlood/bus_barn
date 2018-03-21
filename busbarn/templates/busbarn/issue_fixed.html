@@ -1,0 +1,43 @@
+{% extends "busbarn/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+<h1>Completed Jobs</h1>
+
+{% if issue_list %}
+<table class="table">
+  <tr>
+    <th>Vehicle</th>
+    <th>Description</th>
+    <th>Start Date</th>
+    <th>Severity</th>
+    <th>Mechanic</th>
+    <th>Reason</th>
+    <th></th>
+  </tr>
+  
+  {% for issue in issue_list %}
+  <tr>
+    <td><a href="{% url 'vehicles:vehicle_detail' issue.vehicle.id %}">{{ issue.vehicle.vehicle_name }}</a></td>
+    <td>{{ issue.description }}</td>
+    <td>{{ issue.date_noted|date:'m/d/Y' }}</td>
+    <td>{{ issue.severity }}</td>
+    <td>{{ issue.mechanic }}</td>
+    <td>{{ issue.reason }}</td>
+    <td><a href="{% url 'vehicles:issue_detail' issue.id %}" class="btn btn-success">View</a></td>
+    <td><a href="{% url 'vehicles:issue_edit' issue.id %}" class="btn btn-success">Edit</a></td>
+  </tr>
+    
+  {% endfor %}
+</table>
+
+{% else %}
+<p> There are no outstanding issues at this time. </p>
+{% endif %}
+
+<p><a href="{% url 'vehicles:issue_add' %}" class="btn btn-success">Create Write Up</a>
+
+<p><a href="{% url 'vehicles:issue_print' %}" class="btn btn-success">Print List</a>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "busbarn/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+{% if vehicle_list %}
+<table class="table">
+  <tr>
+    <th>Vehicle Name</th>
+    <th>Vin Number</th>
+    <th>License Plate</th>
+    <th>Vehicle Class</th>
+    <th></th>
+  </tr>
+  {% for vehicle in vehicle_list %}
+  <tr>
+    <td>{{ vehicle.vehicle_name }}</td>
+    <td>{{ vehicle.vin_number }}</td>
+    <td>{{ vehicle.license_plate }}</td>
+    <td>{{ vehicle.vehicle_class }}</td>
+    <td><a href="{% url 'vehicles:vehicle_detail' vehicle.id %}" class="btn">View</a>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p> No vehicles in list </p>
+{% endif %}
+
+{% endblock %}

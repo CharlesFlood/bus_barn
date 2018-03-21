@@ -1,0 +1,16 @@
+{% extends "busbarn/base.html" %}
+
+{% block content %}
+
+<h1>Editing Issue {{ issue.id }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'vehicles:issue_edit' issue.id %}" method="post">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+<input type="submit" value="Update" />
+</form>
+{% endblock %}

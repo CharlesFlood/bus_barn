@@ -1,0 +1,24 @@
+{% extends "busbarn/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+<h1>Issue {{ issue.id }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<table class="table">
+  <tr><th>Description</th><td>{{ issue.description }}</td></tr>
+  <tr><th>Vehicle</th><td>{{ issue.vehicle.vehicle_name }}</td></tr>
+  <tr><th>Date Noted</th><td>{{ issue.date_noted }}</td></tr>
+  <tr><th>Severity</th><td>{{ issue.severity }}</td></tr>
+  <tr><th>Mechanic Assigned</th><td>{{ issue.mechanic }}</td></tr>
+  <tr><th>Date Completed</th><td>{{ issue.date_completed }}</td></tr>
+  <tr><th>Reason</th><td>{{ issue.reason }}</td></tr>
+  <tr><th>Repair</th><td>{{ issue.repair }}</td></tr>
+  <tr><th>Notes</th><td>{{ issue.notes }}</td></tr>
+</table>
+
+<a class="btn btn-success" href="{% url 'vehicles:issue_edit' issue.id %}">Edit Issue</a>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+*.pyc
+*~
+mod_wsgi*
+*#*#
+.*
+nvbc/settings.py

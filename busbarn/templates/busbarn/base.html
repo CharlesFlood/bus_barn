@@ -1,0 +1,26 @@
+<html>
+  <head>
+    {% load bootstrap3 %}
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div style="margin-left: auto; margin-right: auto;">
+	<ul class="nav navbar-nav">
+	  <li><a href="{% url 'vehicles:vehicle_list' %}">Vehicle List</a></li>
+	  <li><a href="{% url 'vehicles:issue_list' %}">Issue List</a></li>
+	  <li><a href="{% url 'vehicles:issue_fixed' %}">Completed Jobs</a></li>
+	</ul>
+      </div>
+    </nav>
+    
+    {% bootstrap_messages %}
+    <div style="width:80%; margin-left: auto; margin-right: auto;">
+    {% block content %}
+    {% endblock %}
+    </div>
+  </body>
+</html>
