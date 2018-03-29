@@ -6,6 +6,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.timezone import now
 from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+import datetime
+
 
 # Create your views here.
 from .models import Vehicle, Issue
@@ -75,23 +78,44 @@ def issue_print(request):
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="printout.pdf"'
-
-    p = canvas.Canvas(response, bottomup=0)
+    now = datetime.datetime.now()
+    
+    p = canvas.Canvas(response, bottomup=0, pagesize=letter)
 
     vertValue = 40
     p.drawString(30, vertValue, "Vehicle")
     p.drawString(85, vertValue, "Priority")
     p.drawString(130, vertValue, "Reason")
     p.drawString(220, vertValue, "Problem")
-       
+    #add date that the report was generated
+    p.drawString(420, vertValue, now.strftime("Report Generated %m/%d/%Y"))
     vertValue=70
+
+    page_entry=1
+    page_number=1
     for issue in issue_list:
+        if (page_entry==36):
+            p.drawString(550, vertValue, "page {0}".format(page_number))
+            page_entry=1
+            page_number+=1
+            p.showPage()
+            vertValue=40
+            p.drawString(30, vertValue, "Vehicle")
+            p.drawString(85, vertValue, "Priority")
+            p.drawString(130, vertValue, "Reason")
+            p.drawString(220, vertValue, "Problem")
+            #add date that the report was generated
+            p.drawString(420, vertValue, now.strftime("Report Generated %m/%d/%Y"))
+            vertValue=70
+
         p.drawString(30, vertValue, issue.vehicle.vehicle_name)
         p.drawString(85, vertValue, issue.severity)
         p.drawString(130, vertValue, issue.reason)
         p.drawString(220, vertValue, issue.description)
         vertValue = vertValue + 20
-        
+        page_entry+=1
+
+    p.drawString(550, 770, "page {0}".format(page_number))
     p.showPage()
     p.save()
     return response
