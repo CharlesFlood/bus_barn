@@ -61,7 +61,6 @@ def issue_add(request, bus_id=None):
     if request.method == "POST":
         form = IssueForm(request.POST)
         if form.is_valid():
-            print form.fields['date_noted']
             form.cleaned_data['date_noted'] = now()
             form.save()
             return HttpResponseRedirect(reverse('busbarn:issue_list'))
