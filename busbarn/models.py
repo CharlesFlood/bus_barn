@@ -25,6 +25,13 @@ class Vehicle(models.Model):
     def __str__(self):
         return self.vehicle_name
 
+class Mechanic(models.Model):
+    name = models.CharField(max_length=30)
+    phone = models.CharField(max_length=12)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
     
 class Issue(models.Model):
     SEVERITY_OPTIONS = (
@@ -46,7 +53,11 @@ class Issue(models.Model):
     date_noted = models.DateTimeField('date noted')
     severity = models.CharField(max_length=12, choices=SEVERITY_OPTIONS)
     description = models.CharField(max_length=100)
-    mechanic = models.CharField(max_length=30, blank=True)
+
+    # mechanic = models.CharField(max_length=30, blank=True)
+    mechanic = models.ForeignKey(Mechanic, null=True,on_delete=models.PROTECT) # prevents deleting mechanics when they're attached to an issue.
+
+    
     date_completed = models.DateTimeField('date completed', blank=True, null=True)
     remarks = models.TextField(blank=True)
     reason = models.CharField(max_length=21, choices=REASONS, default="Other scheduled")
