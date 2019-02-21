@@ -55,7 +55,12 @@ class Issue(models.Model):
     description = models.CharField(max_length=100)
 
     # mechanic = models.CharField(max_length=30, blank=True)
-    mechanic = models.ForeignKey(Mechanic, null=True,on_delete=models.PROTECT) # prevents deleting mechanics when they're attached to an issue.
+    mechanic = models.ForeignKey(
+        Mechanic,
+        blank=True, null=True, #Allows field to be blank in the form and database
+        on_delete=models.PROTECT, #Preserves the record; prevents deleting mechanics with records
+        limit_choices_to={'active': True} #Only shows active mechanics in the form
+    ) 
 
     
     date_completed = models.DateTimeField('date completed', blank=True, null=True)
