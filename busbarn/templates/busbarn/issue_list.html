@@ -23,7 +23,7 @@
     <td>{{ issue.description }}</td>
     <td>{{ issue.date_noted|date:'m/d/Y' }}</td>
     <td>{{ issue.severity }}</td>
-    <td>{{ issue.mechanic }}</td>
+    <td>{{ issue.mechanic|default_if_none:"" }}</td>
     <td>{{ issue.reason }}</td>
     <td><a href="{% url 'vehicles:issue_detail' issue.id %}" >View</a></td>
     <td><a href="{% url 'vehicles:issue_edit' issue.id %}" >Edit</a></td>
