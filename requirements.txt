@@ -1,6 +1,7 @@
 Django==2.1.7
 django-bootstrap==0.2.4
 django-bootstrap4==0.0.7
+mod-wsgi==4.6.5
 mysqlclient==1.4.2
 Pillow==5.4.1
 pytz==2018.9
