@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.utils.timezone import now
+from datetime import datetime
 
 # Create your models here.
 
@@ -67,7 +69,9 @@ class Issue(models.Model):
     remarks = models.TextField(blank=True)
     reason = models.CharField(max_length=21, choices=REASONS, default="Other scheduled")
     repair = models.CharField(max_length=21, choices=REPAIR_CODES, blank=True)
-
+    last_updated = models.DateTimeField('Last updated', default=datetime.now, blank=True)
+    deleted = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.description
 

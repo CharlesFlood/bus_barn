@@ -33,7 +33,7 @@ def vehicle_basic_edit(request, vehicle_id):
     return HttpResponse("Make basic edits to a specific vehicle here.")
 
 def issue_list(request):
-    issue_list = Issue.objects.filter(date_completed__isnull=True).order_by('vehicle__vehicle_name')
+    issue_list = Issue.objects.filter(date_completed__isnull=True).filter(deleted=False).order_by('vehicle__vehicle_name')
     context = {'issue_list': issue_list}
     return render(request, 'busbarn/issue_list.html', context)
 def issue_fixed(request):
@@ -51,6 +51,7 @@ def issue_edit(request, issue_id):
     form = IssueForm(request.POST or None, instance=instance)
     if form.is_valid():
         form.save()
+        form.cleaned_data['last_updated'] = now()
         if not form.cleaned_data['repair'] == "":
             instance.date_completed = now()
             instance.save()
@@ -62,6 +63,7 @@ def issue_add(request, bus_id=None):
         form = IssueForm(request.POST)
         if form.is_valid():
             form.cleaned_data['date_noted'] = now()
+            #form.cleaned_data['last_updated'] = now()
             form.save()
             return HttpResponseRedirect(reverse('busbarn:issue_list'))
     else:
@@ -71,7 +73,14 @@ def issue_add(request, bus_id=None):
             form = IssueForm({'date_noted': now()})
         #form.fields['date_noted'].disabled = True
         return render(request, 'busbarn/issue_add.html', {'form': form})
-        
+
+def issue_delete(request, issue_id):
+    issue = get_object_or_404(Issue, id=issue_id)
+    issue.last_updated = now()
+    issue.deleted = True
+    issue.save()
+    return HttpResponseRedirect(reverse("busbarn:issue_list"))
+    
 def issue_print(request):
     issue_list = Issue.objects.filter(date_completed__isnull=True).order_by('vehicle__vehicle_name')
 

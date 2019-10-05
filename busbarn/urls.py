@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^issue/add/$', views.issue_add, name='issue_add'),
     url(r'^issue/add/(?P<bus_id>[0-9]+)/$', views.issue_add, name='issue_add'),
     url(r'^issue/fixed$', views.issue_fixed, name='issue_fixed'),
+    url(r'^issue/delete/(?P<issue_id>[0-9]+)/$', views.issue_delete, name='issue_delete'),
     
     url(r'^issue/print/$', views.issue_print, name='issue_print'),
 ]
