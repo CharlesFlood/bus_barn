@@ -48,8 +48,16 @@ def mechanic_add(request):
     else:
         form = MechanicForm()
         return render(request, 'busbarn/mechanic_add.html', {'form': form})
-def mechanic_update_status(request):
-    pass
+def mechanic_update_status(request, mechanic_id, status):
+    mechanic = get_object_or_404(Mechanic, id=mechanic_id)
+    if status=="1":
+        print("activating")
+        mechanic.active = True
+    else:
+        print("deactivating")
+        mechanic.active = False
+    mechanic.save()
+    return HttpResponseRedirect(reverse('busbarn:mechanic_list'))
 
 def issue_list(request):
     issue_list = Issue.objects.filter(date_completed__isnull=True).filter(deleted=False).order_by('vehicle__vehicle_name')

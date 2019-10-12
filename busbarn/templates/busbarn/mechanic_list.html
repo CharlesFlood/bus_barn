@@ -11,19 +11,19 @@
     <th>Name</th>
     <th>Phone #</th>
     <th>Status</th>
-    <!--<th></th>-->
+    <th></th>
   </tr>
 
   {% for mechanic in mechanic_list %}
   <tr>
     <td>{{ mechanic.name }}</td>
-    <td>{{ mechanic.phone }}</td>
+    <td>{% if mechanic.phone %} {{mechanic.phone}} {% else %} &nbsp; {% endif %}</td>
     {% if mechanic.active %}
     <td>Active</td>
-    <!--<td><a href="#">Deactivate</a></td>-->
+    <td><a href="{% url 'vehicles:mechanic_update_status' mechanic.id 0 %}">Deactivate</a></td>
     {% else %}
     <td>Inactive</td>
-    <!--<td><a href="#">Activate</a></td>-->
+    <td><a href="{% url 'vehicles:mechanic_update_status' mechanic.id 1 %}">Activate</a></td>
     {% endif %}
   </tr>
   {% endfor %}

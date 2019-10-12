@@ -30,7 +30,7 @@ class Vehicle(models.Model):
 
 class Mechanic(models.Model):
     name = models.CharField(max_length=30)
-    phone = models.CharField(max_length=12)
+    phone = models.CharField(max_length=12, blank=True, null=True)
     active = models.BooleanField(default=True)
 
     def __str__(self):
