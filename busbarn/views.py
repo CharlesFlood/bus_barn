@@ -11,8 +11,8 @@ import datetime
 
 
 # Create your views here.
-from .models import Vehicle, Issue
-from .forms import IssueForm
+from .models import Vehicle, Issue, Mechanic
+from .forms import IssueForm, MechanicForm
 
 def index(request):
     return HttpResponseRedirect(reverse('busbarn:issue_list'))
@@ -30,7 +30,26 @@ def vehicle_detail(request, vehicle_id):
 
 def vehicle_basic_edit(request, vehicle_id):
     # currently do nothing
-    return HttpResponse("Make basic edits to a specific vehicle here.")
+    return HttpResponse("Adding and editing vehicles can only be done through the admin interface.")
+
+def mechanic_list(request):
+    #mechanic_list = Mechanic.objects.filter(active=True).order_by('name')
+    mechanic_list = Mechanic.objects.order_by('name')
+    context = {'mechanic_list': mechanic_list}
+    return render(request, 'busbarn/mechanic_list.html', context)
+
+def mechanic_add(request):
+    # TODO: implement using issue add as a template
+    if request.method == "POST":
+        form = MechanicForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('busbarn:mechanic_list'))
+    else:
+        form = MechanicForm()
+        return render(request, 'busbarn/mechanic_add.html', {'form': form})
+def mechanic_update_status(request):
+    pass
 
 def issue_list(request):
     issue_list = Issue.objects.filter(date_completed__isnull=True).filter(deleted=False).order_by('vehicle__vehicle_name')
@@ -55,7 +74,7 @@ def issue_edit(request, issue_id):
         if not form.cleaned_data['repair'] == "":
             instance.date_completed = now()
             instance.save()
-        return HttpResponseRedirect(reverse('busbarn:issue_detail', args=(issue_id,)))
+        return HttpResponseRedirect(reverse('busbarn:mechanic_list', args=(issue_id,)))
     return render(request, 'busbarn/issue_edit.html', {'form': form, 'issue': instance})
 
 def issue_add(request, bus_id=None):

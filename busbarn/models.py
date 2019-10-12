@@ -23,7 +23,8 @@ class Vehicle(models.Model):
     vehicle_class = models.CharField(max_length=10, choices=VEHICLE_CLASSES)
     vehicle_name = models.CharField(max_length=30, default='default')
     remarks = models.TextField(blank=True)
-
+    retired = models.BooleanField(default=False)
+    
     def __str__(self):
         return self.vehicle_name
 
@@ -69,7 +70,7 @@ class Issue(models.Model):
     remarks = models.TextField(blank=True)
     reason = models.CharField(max_length=21, choices=REASONS, default="Other scheduled")
     repair = models.CharField(max_length=21, choices=REPAIR_CODES, blank=True)
-    last_updated = models.DateTimeField('Last updated', default=datetime.now, blank=True)
+    last_updated = models.DateTimeField('Last updated', default=now, blank=True)
     deleted = models.BooleanField(default=False)
     
     def __str__(self):

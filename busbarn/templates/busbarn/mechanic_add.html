@@ -1,0 +1,22 @@
+{% extends "busbarn/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<h1>Add New Mechanic</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'vehicles:mechanic_add' %}" method="post">
+  {% csrf_token %}
+  <table class="table">
+    {{ form.as_table }}
+  </table>
+
+  
+  {% buttons %}
+  <input type="submit" value="Create" />
+  {% endbuttons %}
+</form>
+
+{% endblock %}

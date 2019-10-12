@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Vehicle, Issue  ### is this needed?
+from .models import Vehicle, Issue, Mechanic  ### is this needed?
 
 class IssueForm(ModelForm):
     class Meta:
@@ -15,3 +15,7 @@ class IssueForm(ModelForm):
             self.fields['repair'].required=False
             self.fields['remarks'].required=False
 
+class MechanicForm(ModelForm):
+    class Meta:
+        model = Mechanic
+        fields = ('name','phone','active')

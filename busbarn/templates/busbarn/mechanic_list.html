@@ -1,0 +1,38 @@
+{% extends "busbarn/base.html" %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>Mechanics</h1>
+
+{% if mechanic_list %}
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Phone #</th>
+    <th>Status</th>
+    <!--<th></th>-->
+  </tr>
+
+  {% for mechanic in mechanic_list %}
+  <tr>
+    <td>{{ mechanic.name }}</td>
+    <td>{{ mechanic.phone }}</td>
+    {% if mechanic.active %}
+    <td>Active</td>
+    <!--<td><a href="#">Deactivate</a></td>-->
+    {% else %}
+    <td>Inactive</td>
+    <!--<td><a href="#">Activate</a></td>-->
+    {% endif %}
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+<p> You have no mechanics registered at this time.</p>
+{% endif %}
+
+<p><a href="{% url 'vehicles:mechanic_add' %}" class="btn btn-success">Add Mechanic</a>
+
+{% endblock %}
