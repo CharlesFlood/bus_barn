@@ -82,7 +82,7 @@ def issue_edit(request, issue_id):
         if not form.cleaned_data['repair'] == "":
             instance.date_completed = now()
             instance.save()
-        return HttpResponseRedirect(reverse('busbarn:mechanic_list', args=(issue_id,)))
+        return HttpResponseRedirect(reverse('busbarn:issue_list'))
     return render(request, 'busbarn/issue_edit.html', {'form': form, 'issue': instance})
 
 def issue_add(request, bus_id=None):
