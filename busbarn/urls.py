@@ -12,6 +12,7 @@ urlpatterns = [
     
     url(r'^mechanic/add/$', views.mechanic_add, name='mechanic_add'),
     url(r'^mechanic/$', views.mechanic_list, name='mechanic_list'),
+    url(r'^mechanic/(?P<mechanic_id>[0-9]+)/edit/$', views.mechanic_edit, name='mechanic_edit'),
     url(r'^mechanic/(?P<mechanic_id>[0-9]+)/(?P<status>[01])$', views.mechanic_update_status, name='mechanic_update_status'),
     
     url(r'^issue/$', views.issue_list, name='issue_list'),

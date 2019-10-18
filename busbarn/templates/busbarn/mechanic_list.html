@@ -12,6 +12,7 @@
     <th>Phone #</th>
     <th>Status</th>
     <th></th>
+    <th></th>
   </tr>
 
   {% for mechanic in mechanic_list %}
@@ -25,6 +26,9 @@
     <td>Inactive</td>
     <td><a href="{% url 'vehicles:mechanic_update_status' mechanic.id 1 %}">Activate</a></td>
     {% endif %}
+    
+    <td><a href="{% url 'vehicles:mechanic_edit' mechanic.id %}" >Edit</a></td>
+
   </tr>
   {% endfor %}
 </table>
