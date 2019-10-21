@@ -33,8 +33,8 @@ def vehicle_basic_edit(request, vehicle_id):
     return HttpResponse("Adding and editing vehicles can only be done through the admin interface.")
 
 def mechanic_list(request):
-    #mechanic_list = Mechanic.objects.filter(active=True).order_by('name')
-    mechanic_list = Mechanic.objects.order_by('name')
+    mechanic_list = Mechanic.objects.filter(active=True).order_by('name')
+    #mechanic_list = Mechanic.objects.order_by('name')
     context = {'mechanic_list': mechanic_list}
     return render(request, 'busbarn/mechanic_list.html', context)
 
@@ -109,7 +109,7 @@ def issue_delete(request, issue_id):
     return HttpResponseRedirect(reverse("busbarn:issue_list"))
     
 def issue_print(request):
-    issue_list = Issue.objects.filter(date_completed__isnull=True).order_by('vehicle__vehicle_name')
+    issue_list = Issue.objects.filter(date_completed__isnull=True).filter(deleted=False).order_by('vehicle__vehicle_name')
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="printout.pdf"'
