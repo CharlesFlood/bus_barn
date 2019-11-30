@@ -28,6 +28,9 @@ class Vehicle(models.Model):
     def __str__(self):
         return self.vehicle_name
 
+    class Meta:
+        ordering = ['vehicle_name']
+
 class Mechanic(models.Model):
     name = models.CharField(max_length=30)
     phone = models.CharField(max_length=12, blank=True, null=True)
