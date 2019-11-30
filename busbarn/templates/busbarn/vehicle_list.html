@@ -11,6 +11,7 @@
     <th>License Plate</th>
     <th>Vehicle Class</th>
     <th></th>
+    <th></th>
   </tr>
   {% for vehicle in vehicle_list %}
   <tr>
@@ -18,12 +19,15 @@
     <td>{{ vehicle.vin_number }}</td>
     <td>{{ vehicle.license_plate }}</td>
     <td>{{ vehicle.vehicle_class }}</td>
-    <td><a href="{% url 'vehicles:vehicle_detail' vehicle.id %}" class="btn">View</a>
+    <td><a href="{% url 'vehicles:vehicle_edit' vehicle.id %}" class="btn">Edit</a></td>
+    <td><a href="{% url 'vehicles:vehicle_detail' vehicle.id %}" class="btn">View</a></td>
   </tr>
   {% endfor %}
 </table>
 {% else %}
-<p> No vehicles in list </p>
+<p> You have no vehicles registered for this application at this time. </p>
 {% endif %}
+
+<p><a href="{% url 'vehicles:vehicle_add' %}" class="btn btn-success">Add Vehicle</a>
 
 {% endblock %}

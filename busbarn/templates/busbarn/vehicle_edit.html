@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h1>Editing Mechanic {{ mechanic.id }}</h1>
+<h1>Editing Vehicle {{ vehicle.id }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'vehicles:mechanic_edit' mechanic.id %}" method="post">
+<form action="{% url 'vehicles:vehicle_edit' vehicle.id %}" method="post">
   {% csrf_token %}
   <table>
     {{ form.as_table }}

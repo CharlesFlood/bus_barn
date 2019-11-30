@@ -19,3 +19,9 @@ class MechanicForm(ModelForm):
     class Meta:
         model = Mechanic
         fields = ('name','phone','active')
+
+class VehicleForm(ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = ('vehicle_name', 'license_plate', 'vehicle_class',
+                  'vin_number', 'remarks', 'retired')

@@ -21,7 +21,7 @@
 
   {% for issue in issues %}
   <tr>
-    <td>{{ issue.description }}</td>
+    <td><a href="{% url 'vehicles:issue_detail' issue.id %}">{{ issue.description }}</a></td>
     <td>{{ issue.date_noted }}</td>
     <td>{{ issue.severity }}</td>
     <td>{{ issue.mechanic }}</td>
