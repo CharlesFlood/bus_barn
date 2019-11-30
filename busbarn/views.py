@@ -12,13 +12,13 @@ import datetime
 
 # Create your views here.
 from .models import Vehicle, Issue, Mechanic
-from .forms import IssueForm, MechanicForm
+from .forms import IssueForm, MechanicForm, VehicleForm
 
 def index(request):
     return HttpResponseRedirect(reverse('busbarn:issue_list'))
 
 def vehicle_list(request):
-    vehicle_list = Vehicle.objects.all()
+    vehicle_list = Vehicle.objects.filter(retired=False)
     context = {'vehicle_list': vehicle_list}
     return render(request, 'busbarn/vehicle_list.html', context)
 
@@ -28,9 +28,24 @@ def vehicle_detail(request, vehicle_id):
     issues = Issue.objects.filter(vehicle_id=vehicle_id)
     return render(request, 'busbarn/vehicle_detail.html', {'vehicle': vehicle, 'issues': issues })
 
-def vehicle_basic_edit(request, vehicle_id):
-    # currently do nothing
-    return HttpResponse("Adding and editing vehicles can only be done through the admin interface.")
+def vehicle_add(request):
+    if request.method == "POST":
+        form = VehicleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('busbarn:vehicle_list'))
+    else:
+        form = VehicleForm()
+        return render(request, 'busbarn/vehicle_add.html', {'form': form})
+
+def vehicle_edit(request, vehicle_id):
+    instance = get_object_or_404(Vehicle, id=vehicle_id)
+    form = VehicleForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        instance.save()
+        return HttpResponseRedirect(reverse('busbarn:vehicle_list'))
+    return render(request, 'busbarn/vehicle_edit.html', {'form': form, 'vehicle': instance})
 
 def mechanic_list(request):
     mechanic_list = Mechanic.objects.filter(active=True).order_by('name')

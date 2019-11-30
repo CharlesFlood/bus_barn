@@ -6,9 +6,10 @@ app_name = 'vehicles'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     
+    url(r'^vehicle/add/$', views.vehicle_add, name='vehicle_add'),
     url(r'^vehicle/$', views.vehicle_list, name='vehicle_list'),
-    url(r'^(?P<vehicle_id>[0-9]+)/$', views.vehicle_detail, name='vehicle_detail'),
-    url(r'^(?P<vehicle_id>[0-9]+)/edit/$', views.vehicle_detail, name='vehicle_edit'),
+    url(r'^vehicle/(?P<vehicle_id>[0-9]+)/$', views.vehicle_detail, name='vehicle_detail'),
+    url(r'^vehicle/(?P<vehicle_id>[0-9]+)/edit/$', views.vehicle_edit, name='vehicle_edit'),
     
     url(r'^mechanic/add/$', views.mechanic_add, name='mechanic_add'),
     url(r'^mechanic/$', views.mechanic_list, name='mechanic_list'),
